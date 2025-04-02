@@ -1,6 +1,5 @@
 
 import CryptoList from "@/components/crypto/CryptoList";
-// import WeatherList from "@/components/weather/WeatherList";
 
 export default function Home() {
   return (
@@ -8,7 +7,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-8">CryptoWeather Dashboard</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <CryptoList />
-        {/* <WeatherList /> */}
+       
       </div>
     </div>
   );
