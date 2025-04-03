@@ -9,8 +9,7 @@ const nextConfig = {
       'coin-images.coingecko.com',
     ],
   },
-  // Optional: Enable SWC minification for better performance
-  swcMinify: true,
+  
 };
 
 module.exports = nextConfig;
