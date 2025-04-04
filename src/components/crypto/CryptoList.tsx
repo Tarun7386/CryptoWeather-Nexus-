@@ -1,58 +1,44 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import cryptoApi from "@/lib/cryptoApi";
-
-interface Crypto {
-  id: string;
-  name: string;
-  symbol: string;
-  image: string;
-  current_price: number;
-  market_cap: number;
-  price_change_percentage_24h: number;
-}
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { fetchCryptoData } from "@/redux/slices/cryptoSlice";
+import { RootState } from "@/redux/store";
 
 const CryptoList = () => {
-  const [cryptoData, setCryptoData] = useState<Crypto[]>([]);
+  const dispatch = useAppDispatch();
+  
+  // ✅ Ensure Redux state is properly typed
+  const { cryptoData, status } = useAppSelector((state: RootState) => state.crypto);
+
+  // ✅ Fix: Create a state for live prices
   const [livePrices, setLivePrices] = useState<{ [key: string]: number }>({});
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Fetch initial market data
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = await cryptoApi.getMarketData();
-        setCryptoData(data);
-      } catch (error) {
-        console.error("Error fetching market data:", error);
-      }
-      setLoading(false);
-    };
+    dispatch(fetchCryptoData());
+  }, [dispatch]);
 
-    fetchData();
+  // ✅ Example: Simulate live price updates (replace with WebSocket logic later)
+  useEffect(() => {
+    if (cryptoData.length === 0) return; // Prevent updating empty state initially
 
-    // WebSocket for live price updates
-    const socket = new WebSocket("wss://ws.coincap.io/prices?assets=bitcoin,ethereum,solana");
+    const interval = setInterval(() => {
+      setLivePrices((prevPrices) => {
+        const updatedPrices = { ...prevPrices };
+        cryptoData.forEach((coin) => {
+          updatedPrices[coin.id] =
+            (prevPrices[coin.id] || coin.current_price) + (Math.random() * 10 - 5); // Simulated fluctuation
+        });
+        return updatedPrices;
+      });
+    }, 5000); // Update every 5 seconds
 
-    socket.onmessage = (event) => {
-      try {
-        const newPrices = JSON.parse(event.data);
-        setLivePrices((prev) => ({ ...prev, ...newPrices }));
-      } catch (error) {
-        console.error("Error parsing WebSocket data:", error);
-      }
-    };
+    return () => clearInterval(interval);
+  }, [cryptoData]);
 
-    socket.onerror = (error) => console.error("WebSocket error:", error);
-    
-    return () => socket.close(); // Cleanup WebSocket on component unmount
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
+  if (status === "loading") return <p>Loading crypto data...</p>;
+  if (status === "failed") return <p>Error loading crypto data.</p>;
 
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-md">
@@ -75,9 +61,9 @@ const CryptoList = () => {
                 </Link>
               </td>
               <td className="border px-4 py-2 font-semibold">
-                {livePrices[coin.id] 
-                  ? `$${livePrices[coin.id].toLocaleString()} (Live)` 
-                  : `$${coin.current_price.toLocaleString()}`}
+                {livePrices[coin.id] !== undefined
+                  ? `$${livePrices[coin.id].toFixed(2)} (Live)`
+                  : `$${coin.current_price.toFixed(2)}`}
               </td>
               <td
                 className={`border px-4 py-2 ${
