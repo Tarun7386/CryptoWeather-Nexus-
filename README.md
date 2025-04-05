@@ -6,7 +6,7 @@
 
 ## 🖼️ Preview
 
-![CryptoWeather Nexus Dashboard](./public/screenshots/dashboard-preview.png)
+![CryptoWeather Nexus Dashboard](./public/dashboard.png)
 
 ---
 
@@ -33,7 +33,7 @@
 | **State Management** | Redux Toolkit + React-Redux                  |
 | **Data Fetching**  | Axios                                          |
 | **Charts**         | Chart.js                                       |
-| **WebSocket**      | CoinCap for crypto prices, mock alerts for weather |
+| **WebSocket**      | CoinCap for crypto prices |
 | **APIs**           | OpenWeatherMap, CoinCap, NewsData.io          |
 | **Deployment**     | Vercel                                         |
 
