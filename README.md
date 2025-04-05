@@ -72,16 +72,16 @@ NEXT_PUBLIC_NEWSDATA_API_KEY=your_newsdata_api_key
 ```
   npm install
 ```
-3.Add .env.local
+3.  Add .env.local
 ```
   touch .env.local
 ```
-   # Then paste your API keys
+Then paste your API keys
 4.Run the dev server
 ```
   npm run dev  
 ```
- # Visit http://localhost:3000 to see it live.
+ Visit http://localhost:3000 to see it live.
 
 
 
