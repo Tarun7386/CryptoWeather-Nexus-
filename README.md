@@ -106,7 +106,18 @@ Visit http://localhost:3000 to see it live.
   **Challenge:** Requests to CoinGecko API returned 429 Too Many Requests.
   
   **Cause:** CoinGecko limits unauthenticated free-tier access.
-   
+
+---
+
+## 🔗 Resources & Links
+
+- 📘 [Next.js Documentation](https://nextjs.org/docs)
+- 🎨 [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- 🔌 [CoinCap WebSocket Docs](https://docs.coincap.io/)
+- 🌦️ [OpenWeatherMap API](https://openweathermap.org/api)
+- 📊 [CoinGecko API](https://www.coingecko.com/en/api)
+- 📰 [NewsData.io](https://newsdata.io/)
+
 
     
 
