@@ -85,22 +85,30 @@ Then paste your API keys
 Visit http://localhost:3000 to see it live.
 
 ---
+
 # 📚 Documentation – Challenges & Resolutions
 
 ### 1. 🔗 Dependency Conflict During Deployment (Vercel)
 
-    Challenge: Vercel failed to build the project due to conflicting versions of @types/react and @types/react-dom.
-    Cause: @types/react-dom@19.x required React v19 types, but we were using React v18.
+  **Challenge:** Vercel failed to build the project due to conflicting versions of @types/react and @types/react-dom.
+    
+  **Cause:** @types/react-dom@19.x required React v19 types, but we were using React v18.
 
 ### 2. 🌐 Network Errors from OpenWeatherMap
 
    **Challenge:** Axios requests to OpenWeatherMap sometimes failed with a Network Error.
+  
    **Cause:** Missing or improperly configured environment variables on the client or Vercel.
+   
    
 ### 3. 📉 Crypto API Rate Limiting (429 Errors)
 
-    **Challenge:** Requests to CoinGecko API returned 429 Too Many Requests.
-    **Cause:** CoinGecko limits unauthenticated free-tier access.
+  **Challenge:** Requests to CoinGecko API returned 429 Too Many Requests.
+  
+  **Cause:** CoinGecko limits unauthenticated free-tier access.
+   
+
+    
 
 
 
