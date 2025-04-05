@@ -1,6 +1,5 @@
 import axios from "axios";
 
-const API_KEY = "c9e71ef77553b4d4126f693ecd54d38f"; // Your actual API key
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 export const weatherApi = {
@@ -11,7 +10,7 @@ export const weatherApi = {
         params: {
           q: city,
           units: "metric",
-          appid: API_KEY,
+          appid: process.env.NEXT_PUBLIC_WEATHER_API_KEY,
         },
       });
       return response.data;
@@ -28,7 +27,7 @@ export const weatherApi = {
         params: {
           q: city,
           units: "metric",
-          appid: API_KEY,
+          appid: process.env.NEXT_PUBLIC_WEATHER_API_KEY,
         },
       });
       return response.data.list; // Return forecast data
