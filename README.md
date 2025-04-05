@@ -58,18 +58,27 @@ Create a `.env.local` file in the root:
 ```env
 WEATHER_API_KEY=your_openweathermap_api_key
 NEXT_PUBLIC_NEWSDATA_API_KEY=your_newsdata_api_key
+```
 
 ---
 🧪 Getting Started (Local Development)
 1.Clone the repo
+```
   git clone https://github.com/yourusername/CryptoWeather-Nexus.git
   cd CryptoWeather-Nexus
+```
 2.Install dependencies
+```
   npm install
+```
 3.Add .env.local
+```
   touch .env.local # Then paste your API keys
+```
 4.Run the dev server
+```
   npm run dev  # Visit http://localhost:3000 to see it live.
+```
 
 
 
