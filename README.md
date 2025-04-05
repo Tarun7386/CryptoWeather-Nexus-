@@ -86,7 +86,7 @@ Visit http://localhost:3000 to see it live.
 
 ---
 
-# 📚 Documentation – Challenges & Resolutions
+## 📚 Documentation – Challenges & Resolutions
 
 ### 1. 🔗 Dependency Conflict During Deployment (Vercel)
 
