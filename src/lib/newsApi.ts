@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "pub_78054b75d8d4c5d2097e5ea1ba114540762bd"; // Replace with your actual key
+ // Replace with your actual key
 const BASE_URL = "https://newsdata.io/api/1/news";
 
 export const newsApi = {
@@ -8,7 +8,7 @@ export const newsApi = {
     try {
       const response = await axios.get(BASE_URL, {
         params: {
-          apikey: API_KEY,
+          apikey: process.env.NEXT_PUBLIC_NEWS_API_KEY,
           q: "cryptocurrency OR bitcoin OR ethereum",
           language: "en",
           category: "business",
