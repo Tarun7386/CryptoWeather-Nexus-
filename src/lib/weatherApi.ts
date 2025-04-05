@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 export const weatherApi = {
   // Get current weather for a city
