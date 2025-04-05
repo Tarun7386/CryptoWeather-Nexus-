@@ -56,7 +56,7 @@ const CryptoList = () => {
             <tr key={coin.id} className="text-center bg-white">
               <td className="border px-4 py-2 flex items-center gap-2">
                 <Image src={coin.image} alt={coin.name} width={24} height={24} />
-                <Link href={`/crypto/${coin.id}`} className="text-blue-500 hover:underline">
+                <Link href={`/crypto/${encodeURIComponent(coin.id)}`}className="text-blue-500 hover:underline">
                   {coin.name} ({coin.symbol.toUpperCase()})
                 </Link>
               </td>

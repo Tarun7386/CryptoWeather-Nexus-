@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Chart as ChartJS,
   LineElement,
@@ -11,36 +9,71 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { FC } from "react";
 
-// ✅ Register required Chart.js components
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
 
-export default function WeatherDetails({ city, current, history }) {
+
+interface GroupedWeatherData {
+  tempSum: number;
+  humiditySum: number;
+  count: number;
+}
+// Types for weather props
+interface WeatherDetailsProps {
+  city: string;
+  current: {
+    main: {
+      temp: number;
+      humidity: number;
+    };
+    weather: { description: string }[];
+  };
+  history: {
+    dt: number;
+    main: {
+      temp: number;
+      humidity: number;
+    };
+  }[];
+}
+
+const WeatherDetails: FC<WeatherDetailsProps> = ({ city, current, history }) => {
   if (!current || !history || history.length === 0) return <p>Loading weather data...</p>;
 
-  // Grouping forecast data by day
-  const groupedData = history.reduce((acc, item) => {
-    const date = new Date(item.dt * 1000).toLocaleDateString();
-    if (!acc[date]) acc[date] = { tempSum: 0, humiditySum: 0, count: 0 };
+  // Group forecast data by date
+  const groupedData = history.reduce<Record<string, GroupedWeatherData>>(
+    (acc, item) => {
+      const date = new Date(item.dt * 1000).toLocaleDateString();
+      if (!acc[date]) {
+        acc[date] = { tempSum: 0, humiditySum: 0, count: 0 };
+      }
+      acc[date].tempSum += item.main.temp;
+      acc[date].humiditySum += item.main.humidity;
+      acc[date].count += 1;
+      return acc;
+    },
+    {}
+  );
 
-    acc[date].tempSum += item.main.temp;
-    acc[date].humiditySum += item.main.humidity;
-    acc[date].count += 1;
-
-    return acc;
-  }, {});
-
-  // Extracting averaged data
   const labels = Object.keys(groupedData);
-  const temperatures = labels.map((date) => (groupedData[date].tempSum / groupedData[date].count).toFixed(1));
-  const humidity = labels.map((date) => (groupedData[date].humiditySum / groupedData[date].count).toFixed(1));
+  const temperatures = labels.map(
+    (date) => (groupedData[date].tempSum / groupedData[date].count).toFixed(1)
+  );
+  const humidity = labels.map(
+    (date) => (groupedData[date].humiditySum / groupedData[date].count).toFixed(1)
+  );
 
   return (
     <div className="p-8 bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl shadow-xl border border-sky-100">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
         <svg className="w-8 h-8 mr-3 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+          />
         </svg>
         {city} Weather Details
       </h2>
@@ -95,7 +128,7 @@ export default function WeatherDetails({ city, current, history }) {
               responsive: true,
               plugins: {
                 legend: {
-                  position: 'top',
+                  position: "top",
                 },
                 title: {
                   display: false,
@@ -105,7 +138,7 @@ export default function WeatherDetails({ city, current, history }) {
                 y: {
                   beginAtZero: false,
                   grid: {
-                    color: 'rgba(0, 0, 0, 0.05)',
+                    color: "rgba(0, 0, 0, 0.05)",
                   },
                 },
                 x: {
@@ -144,4 +177,6 @@ export default function WeatherDetails({ city, current, history }) {
       )}
     </div>
   );
-}
+};
+
+export default WeatherDetails;

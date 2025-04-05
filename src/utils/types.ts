@@ -34,4 +34,28 @@ export interface CryptoData {
   }
   
   // Weather types
+  export interface WeatherData {
+    main: {
+      temp: number;
+      humidity: number;
+    };
+    weather: Array<{
+      description: string;
+      icon: string;
+    }>;
+  }
   
+  export interface WeatherForecast {
+    dt: number;
+    main: {
+      temp: number;
+      humidity: number;
+    };
+  }
+  
+  export interface WeatherState {
+    current: Record<string, WeatherData>;
+    forecast: Record<string, WeatherForecast[]>;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    error: string | null;
+  }

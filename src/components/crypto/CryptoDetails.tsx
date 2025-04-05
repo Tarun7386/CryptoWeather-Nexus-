@@ -65,7 +65,10 @@ interface CryptoData {
   };
 }
 
-const CryptoDetails = ({ cryptoId }: { cryptoId: string }) => {
+interface Props {
+  cryptoId: string;
+}
+const CryptoDetails = ({ cryptoId }: Props) => {
   const [crypto, setCrypto] = useState<CryptoData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -85,8 +88,20 @@ const CryptoDetails = ({ cryptoId }: { cryptoId: string }) => {
     fetchData();
   }, [cryptoId]);
 
-  if (loading) return <div className="p-6">Loading...</div>;
-  if (!crypto) return <div className="p-6">Crypto not found</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
+  if (!crypto) {
+    return (
+      <div className="text-center p-6">
+        <p className="text-red-500">Failed to load cryptocurrency details</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6">
